@@ -1,52 +1,69 @@
-import React, { useEffect, useState } from 'react';
-import './App.css';
-import { db } from './firebase'; // <-- 1. Import 'db' từ file config
-import { collection, getDocs } from 'firebase/firestore'; // <-- 2. Import hàm của Firestore
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useAuth } from './context/AuthContext';
+
+// Import component "gác cổng"
+import ProtectedRoute from './components/ProtectedRoute';
+
+// Import các trang của bạn (Tạm thời tạo file rỗng cho chúng)
+// Bạn cần tạo các file này trong `src/pages/`
+// Ví dụ: HomePage.js, LoginPage.js...
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import ProfilePage from './pages/ProfilePage';
+// import Navbar from './components/Navbar'; // Bạn có thể thêm Navbar ở đây
 
 function App() {
-  const [message, setMessage] = useState("Đang kết nối tới CSDL...");
-
-  // Dùng useEffect để chạy code 1 lần khi app khởi động
-  useEffect(() => {
-    // 3. Định nghĩa một hàm async để lấy data
-    const testFirestoreConnection = async () => {
-      try {
-        console.log("Đang thử đọc collection 'test'...");
-
-        // 4. Gọi CSDL: Lấy tất cả document từ collection 'test'
-        const querySnapshot = await getDocs(collection(db, "test"));
-
-        if (querySnapshot.empty) {
-          setMessage("Kết nối CSDL thành công, nhưng collection 'test' bị rỗng.");
-          console.log("Không tìm thấy document nào trong 'test'.");
-        } else {
-          // 5. Lấy data từ document đầu tiên
-          const docData = querySnapshot.docs[0].data();
-          setMessage(`Kết nối CSDL thành công! Data: ${docData.message}`); // Hiển thị data
-          console.log("DỮ LIỆU NHẬN ĐƯỢC:", docData);
-        }
-      } catch (error) {
-        // 6. Nếu có lỗi (vd: sai Rules, sai API key...)
-        setMessage("LỖI KẾT NỐI CSDL! (Xem Console F12)");
-        console.error("Firebase Connection Error:", error);
-      }
-    };
-
-    // 7. Chạy hàm test
-    testFirestoreConnection();
-
-  }, []); // Dấu [] nghĩa là chỉ chạy 1 lần
+  const { currentUser } = useAuth(); // Lấy currentUser để xử lý logic redirect
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h2>Bài Test Kết nối Firebase</h2>
-        <p style={{ color: 'yellow' }}>
-          {message}
-        </p>
-        <p>(Hãy nhấn F12 để xem Console log)</p>
-      </header>
-    </div>
+    <BrowserRouter>
+      {/* <Navbar /> */} {/* Navbar có thể đặt ở đây để hiển thị ở mọi trang */}
+      <Routes>
+        {/*
+          =================================
+          ROUTES ĐƯỢC BẢO VỆ (Protected)
+          Bắt buộc phải đăng nhập để xem
+          =================================
+        */}
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <HomePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile/:userId"
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
+        {/* Thêm các route cần bảo vệ khác ở đây (vd: Chat, Settings...) */}
+
+        {/*
+          =================================
+          ROUTES CÔNG KHAI (Public)
+          Ai cũng có thể xem
+          =================================
+        */}
+        <Route 
+          path="/login" 
+          element={currentUser ? <Navigate to="/" replace /> : <LoginPage />} 
+        />
+        <Route 
+          path="/register" 
+          element={currentUser ? <Navigate to="/" replace /> : <RegisterPage />} 
+        />
+        
+        {/* Route 404 (Không tìm thấy) */}
+        <Route path="*" element={<div>404 - Trang không tồn tại</div>} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
