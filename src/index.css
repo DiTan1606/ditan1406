@@ -267,3 +267,89 @@ body {
     max-width: 380px;
   }
 }
+
+/* ===== MOBILE: HEADER (TRÊN CÙNG) ===== */
+.mobile-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-color: #000;
+  border-bottom: 1px solid #333;
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  z-index: 1300;
+}
+
+.mobile-header .logo {
+  font-family: 'Grand Hotel', cursive;
+  font-size: 1.6rem;
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+}
+
+.mobile-header .icons {
+  display: flex;
+  gap: 16px;
+}
+
+.mobile-header .icons svg {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* ===== MOBILE: FOOTER (DƯỚI CÙNG) ===== */
+.mobile-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-color: #000;
+  border-top: 1px solid #333;
+  display: none;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 1300;
+  padding: 16px;
+}
+
+.mobile-footer .nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #aaa;
+  font-size: 0.7rem;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.mobile-footer .nav-item.active {
+  color: #fff;
+}
+
+.mobile-footer .nav-item svg {
+  font-size: 1.5rem;
+}
+
+/* ===== ẨN SIDEBAR, HIỆN HEADER + FOOTER TRÊN MOBILE ===== */
+@media (max-width: 767px) {
+  .right-sidebar {
+    display: none !important;
+  }
+  .main-content {
+    margin-right: 0 !important;
+    padding-top: 70px !important;   /* Đẩy xuống dưới header */
+    padding-bottom: 70px !important; /* Đẩy lên trên footer */
+    min-height: calc(100vh - 140px);
+  }
+  .mobile-header,
+  .mobile-footer {
+    display: flex;
+  }
+}
