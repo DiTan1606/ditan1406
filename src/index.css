@@ -1,13 +1,269 @@
-body {
+/* src/index.css */
+/* THÊM PHẦN NÀY VÀO CUỐI FILE index.css (nếu file đã có nội dung cũ, giữ nguyên và paste phần này xuống dưới cùng) */
+/* NẾU FILE CHƯA CÓ, COPY TOÀN BỘ PHẦN DƯỚI LÀM NỘI DUNG MỚI */
+
+*,
+*::before,
+*::after {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+html {
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #121212 !important; /* Đen tối giản */
+  color: #ffffff !important;            /* Chữ trắng */
+  min-height: 100vh;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap');
+
+/* DARK MODE CHO MUI */
+.MuiAppBar-root,
+.MuiPaper-root,
+.MuiCard-root {
+  background-color: #1e1e1e !important;
+  color: #fff !important;
+}
+
+.MuiTextField-root .MuiOutlinedInput-root {
+  color: #fff;
+}
+.MuiTextField-root .MuiOutlinedInput-notchedOutline {
+  border-color: #444 !important;
+}
+.MuiTextField-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: #666 !important;
+}
+.MuiTextField-root .MuiInputLabel-root {
+  color: #aaa !important;
+}
+
+/* FONT INSTAGRAM */
+.instagram-font {
+  font-family: 'Grand Hotel', cursive;
+}
+
+/* ===== HEADER DỌC BÊN PHẢI - LUÔN HIỂN THỊ ===== */
+.right-sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 200px;                 /* LUÔN MỞ RỘNG */
+  height: 100vh;
+  background-color: #000;
+  border-left: 1px solid #333;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  z-index: 1200;
+  transition: none;             /* TẮT HIỆU ỨNG HOVER */
+}
+
+.right-sidebar .nav-upper,
+.right-sidebar .nav-lower {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;      /* Căn trái để chữ hiện đẹp */
+  width: 100%;
+  padding: 0 16px;
+}
+
+.right-sidebar .nav-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px 12px;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 12px;
+  transition: background 0.2s;
+  cursor: pointer;
+}
+
+.right-sidebar .nav-item:hover {
+  background-color: #333;
+}
+
+.right-sidebar .nav-item.active {
+  background-color: #262626;
+  font-weight: 600;
+}
+
+.right-sidebar .nav-label {
+  width: 100%;
+  text-align: center;
+  margin: 0 auto;
+  font-size: 1rem;
+  opacity: 1 !important;       /* LUÔN HIỂN THỊ */
+  white-space: nowrap;
+}
+
+/* Logo */
+.right-sidebar .logo {
+  font-family: 'Grand Hotel', cursive;
+  font-size: 2rem;
+  font-style: italic;
+  font-weight: bold;
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 12px;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 12px;
+}
+
+/* Đẩy nội dung chính sang trái để không bị che */
+.main-content {
+  margin-right: 200px;          /* Luôn đẩy sang 240px */
+  transition: none;             /* Tắt hiệu ứng */
+  min-height: 100vh;
+  padding: 16px;
+}
+
+/* Ẩn sidebar trên mobile */
+@media (max-width: 768px) {
+  .right-sidebar {
+    display: none;
+  }
+  .main-content {
+    margin-right: 0 !important;
+  }
+}
+
+/* ===== AUTH PAGES: LOGIN & SIGNUP (GIỐNG INSTAGRAM) ===== */
+.auth-container {
+  min-height: 100vh;
+  background-color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.auth-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 64px;
+  max-width: 1200px;
+  width: 100%;
+}
+
+.auth-mockup {
+  flex: 1;
+  display: none; 
+}
+
+.auth-mockup img {
+  width: 100%;
+  max-width: 380px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+
+.auth-form-container {
+  flex: 1;
+  max-width: 380px;
+  text-align: center;
+}
+
+.auth-logo {
+  font-family: 'Grand Hotel', cursive;
+  font-size: 2.4rem;
+  font-style: italic;
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 24px;
+}
+
+.auth-box {
+  background-color: #1a1a1a;
+  padding: 40px 32px;
+  border-radius: 12px;
+  border: 1px solid #333;
+  margin-bottom: 16px;
+}
+
+.auth-switch {
+  background-color: #1a1a1a;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #333;
+}
+
+.auth-switch a {
+  color: #0095f6;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.auth-switch a:hover {
+  text-decoration: underline;
+}
+
+.auth-button {
+  background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D) !important;
+  color: #fff !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  margin-top: 16px !important;
+}
+
+.auth-input .MuiFilledInput-root {
+  background-color: #333 !important;
+  border-radius: 8px !important;
+}
+
+.auth-input .MuiFilledInput-root::before,
+.auth-input .MuiFilledInput-root::after {
+  border-bottom: none !important;
+}
+
+.auth-input .MuiInputLabel-root {
+  color: #aaa !important;
+}
+
+.auth-input .MuiFilledInput-input {
+  color: #fff !important;
+}
+
+/* RESPONSIVE */
+@media (min-width: 768px) {
+  .auth-mockup {
+    display: block;
+  }
+  .auth-wrapper {
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 767px) {
+  .auth-wrapper {
+    flex-direction: column;
+    gap: 32px;
+  }
+  .auth-form-container {
+    width: 100%;
+    max-width: 380px;
+  }
 }

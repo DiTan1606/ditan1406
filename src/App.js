@@ -1,69 +1,51 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { useAuth } from './context/AuthContext';
+// src/App.js
+import React, { useContext } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthContext } from './contexts/AuthContext';
+import Header from './components/Header';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Profile from './pages/Profile';
+import Chat from './pages/Chat';
 
-// Import component "gác cổng"
-import ProtectedRoute from './components/ProtectedRoute';
+const PrivateRoute = ({ children }) => {
+  const { currentUser } = useContext(AuthContext);
+  return currentUser ? children : <Navigate to="/login" replace />;
+};
 
-// Import các trang của bạn (Tạm thời tạo file rỗng cho chúng)
-// Bạn cần tạo các file này trong `src/pages/`
-// Ví dụ: HomePage.js, LoginPage.js...
-import HomePage from './pages/HomePage';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import ProfilePage from './pages/ProfilePage';
-// import Navbar from './components/Navbar'; // Bạn có thể thêm Navbar ở đây
+const MainLayout = ({ children }) => {
+  const { currentUser } = useContext(AuthContext);
+  return (
+    <>
+      {currentUser && <Header />}
+      <main className="main-content">{children}</main>
+    </>
+  );
+};
 
 function App() {
-  const { currentUser } = useAuth(); // Lấy currentUser để xử lý logic redirect
-
   return (
-    <BrowserRouter>
-      {/* <Navbar /> */} {/* Navbar có thể đặt ở đây để hiển thị ở mọi trang */}
+    <Router>
       <Routes>
-        {/*
-          =================================
-          ROUTES ĐƯỢC BẢO VỆ (Protected)
-          Bắt buộc phải đăng nhập để xem
-          =================================
-        */}
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute>
-              <HomePage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/profile/:userId"
-          element={
-            <ProtectedRoute>
-              <ProfilePage />
-            </ProtectedRoute>
-          }
-        />
-        {/* Thêm các route cần bảo vệ khác ở đây (vd: Chat, Settings...) */}
+        {/* MẶC ĐỊNH → LOGIN */}
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
 
-        {/*
-          =================================
-          ROUTES CÔNG KHAI (Public)
-          Ai cũng có thể xem
-          =================================
-        */}
-        <Route 
-          path="/login" 
-          element={currentUser ? <Navigate to="/" replace /> : <LoginPage />} 
-        />
-        <Route 
-          path="/register" 
-          element={currentUser ? <Navigate to="/" replace /> : <RegisterPage />} 
-        />
-        
-        {/* Route 404 (Không tìm thấy) */}
-        <Route path="*" element={<div>404 - Trang không tồn tại</div>} />
+        {/* TRANG CHÍNH */}
+        <Route path="/home" element={<PrivateRoute><MainLayout><Home /></MainLayout></PrivateRoute>} />
+        <Route path="/profile/:userId" element={<PrivateRoute><MainLayout><Profile /></MainLayout></PrivateRoute>} />
+        <Route path="/chat" element={<PrivateRoute><MainLayout><Chat /></MainLayout></PrivateRoute>} />
+
+        {/* PLACEHOLDER */}
+        <Route path="/search" element={<PrivateRoute><MainLayout><div>Search Page</div></MainLayout></PrivateRoute>} />
+        <Route path="/notifications" element={<PrivateRoute><MainLayout><div>Notifications</div></MainLayout></PrivateRoute>} />
+        <Route path="/settings" element={<PrivateRoute><MainLayout><div>Settings</div></MainLayout></PrivateRoute>} />
+
+        <Route path="*" element={<div>404 Not Found</div>} />
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 }
 
