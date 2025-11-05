@@ -1,27 +1,35 @@
 // src/components/MobileFooter.js
 import React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useContext } from 'react';
-import { AuthContext } from '../contexts/AuthContext';
-import { Box, Avatar } from '@mui/material';
+import { Box } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import SearchIcon from '@mui/icons-material/Search';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import SettingsIcon from '@mui/icons-material/Settings';
+import { useLocation } from 'react-router-dom';
+import { Avatar, Tooltip } from '@mui/material';
+import { useContext } from 'react';
+import { AuthContext } from '../contexts/AuthContext';
 
-const MobileFooter = () => {
-  const { currentUser } = useContext(AuthContext);
-  const navigate = useNavigate();
+const MobileFooter = ({ onNavClick }) => {
   const location = useLocation();
-
+  const { currentUser } = useContext(AuthContext);
   const username = currentUser?.displayName || 'User';
 
   const navItems = [
-    { icon: <HomeIcon />, path: '/home' },
-    { icon: <SearchIcon />, path: '/search' },
-    { icon: <SettingsIcon />, path: '/settings' },
+    { icon: <HomeIcon />, panel: 'home', path: '/home' },
+    { icon: <SearchIcon />, panel: 'search', path: '/mobile/search' },
+    { icon: <AddCircleOutlineIcon />, panel: 'create', path: '/mobile/create' },
+    { icon: <SettingsIcon />, panel: 'settings', path: '/mobile/settings' },
     {
-      icon: <Avatar sx={{ width: 24, height: 24 }}>{username[0]}</Avatar>,
-      path: `/profile/${currentUser?.uid}`,
+      icon: (
+        <Avatar
+          src={currentUser?.photoURL || '/default_avt.png'}
+          sx={{ width: 28, height: 28 }}
+        >
+        </Avatar>
+      ),
+      panel: 'profile',
+      path: '/mobile/profile'
     },
   ];
 
@@ -30,13 +38,29 @@ const MobileFooter = () => {
   return (
     <Box className="mobile-footer">
       {navItems.map((item) => (
-        <Box
-          key={item.path}
-          className={`nav-item ${isActive(item.path) ? 'active' : ''}`}
-          onClick={() => navigate(item.path)}
-        >
-          {item.icon}
-        </Box>
+        <Tooltip key={item.panel}>
+          <Box
+            className={`nav-item ${isActive(item.path) ? 'active' : ''}`}
+            onClick={() => onNavClick(item.panel)}
+            sx={{ cursor: 'pointer' }}
+          >
+            {item.panel === 'profile' ? (
+              <Box
+                sx={{
+                  border: isActive(item.path) ? '2px solid #0095f6' : 'none',
+                  borderRadius: '50%',
+                  p: '2px'
+                }}
+              >
+                {item.icon}
+              </Box>
+            ) : (
+              React.cloneElement(item.icon, {
+                sx: { fontSize: '1.6rem', color: isActive(item.path) ? '#fff' : '#aaa' }
+              })
+            )}
+          </Box>
+        </Tooltip>
       ))}
     </Box>
   );

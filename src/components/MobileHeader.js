@@ -1,23 +1,48 @@
 // src/components/MobileHeader.js
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
+import React, { useContext } from 'react';
+import { Box, IconButton, Tooltip } from '@mui/material';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import ChatIcon from '@mui/icons-material/Chat';
 import { AuthContext } from '../contexts/AuthContext';
-import { Box, Typography } from '@mui/material';
-import NotificationsIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import ChatIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
+import { useLocation } from 'react-router-dom';
 
-const MobileHeader = () => {
+const MobileHeader = ({ onNavClick }) => {
   const { currentUser } = useContext(AuthContext);
-  const navigate = useNavigate();
+  const location = useLocation();
   const username = currentUser?.displayName || 'User';
+
+  const isActive = (path) => location.pathname === path;
 
   return (
     <Box className="mobile-header">
-      <Typography className="logo">{username}</Typography>
-      <Box className="icons">
-        <NotificationsIcon onClick={() => navigate('/notifications')} />
-        <ChatIcon onClick={() => navigate('/chat')} />
+      {/* LOGO */}
+      <Box
+        className="logo"
+        onClick={() => onNavClick('home')}
+        sx={{ cursor: 'pointer', fontSize: '1.6rem', fontWeight: 'bold' }}
+      >
+        {username}
+      </Box>
+
+      {/* ICONS */}
+      <Box sx={{ display: 'flex', gap: 1 }}>
+        <Tooltip>
+          <IconButton
+            onClick={() => onNavClick('notifications')}
+            sx={{ color: isActive('/mobile/notifications') ? '#fff' : '#aaa' }}
+          >
+            <NotificationsIcon />
+          </IconButton>
+        </Tooltip>
+
+        <Tooltip>
+          <IconButton
+            onClick={() => onNavClick('chat')}
+            sx={{ color: isActive('/chat') ? '#fff' : '#aaa' }}
+          >
+            <ChatIcon />
+          </IconButton>
+        </Tooltip>
       </Box>
     </Box>
   );

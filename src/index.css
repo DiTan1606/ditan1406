@@ -74,7 +74,7 @@ body {
 .right-sidebar .nav-lower {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
   align-items: flex-start;      /* Căn trái để chữ hiện đẹp */
   width: 100%;
   padding: 0 16px;
@@ -84,7 +84,7 @@ body {
   display: flex;
   align-items: center;
   width: 100%;
-  padding: 10px 12px;
+  padding: 8px 12px;
   color: #fff;
   text-decoration: none;
   border-radius: 12px;
@@ -130,11 +130,32 @@ body {
 }
 
 /* Đẩy nội dung chính sang trái để không bị che */
-.main-content {
-  margin-right: 200px;          /* Luôn đẩy sang 240px */
-  transition: none;             /* Tắt hiệu ứng */
+.app-layout {
+  display: flex;
   min-height: 100vh;
+  background-color: #000;
+}
+
+.main-content {
+  flex: 1;
+  width: 100%;
+  margin-right: 560px; /* Đẩy sang trái để chừa chỗ header */
   padding: 16px;
+  overflow-y: auto;
+  background-color: #111;
+}
+
+.sub-content {
+  width: 360px;
+  background-color: #000;
+  border-left: 1px solid #333;
+  padding: 16px;
+  position: fixed;
+  right: 200px;
+  top: 0;
+  bottom: 0;
+  overflow-y: auto;
+  z-index: 1100;
 }
 
 /* Ẩn sidebar trên mobile */
@@ -144,6 +165,9 @@ body {
   }
   .main-content {
     margin-right: 0 !important;
+  }
+  .sub-content {
+    display: none !important;
   }
 }
 
@@ -335,6 +359,27 @@ body {
 
 .mobile-footer .nav-item svg {
   font-size: 1.5rem;
+}
+
+/* ===== MOBILE ICON ACTIVE ===== */
+.mobile-footer .nav-item svg {
+  transition: color 0.2s;
+}
+.mobile-footer .nav-item.active svg {
+  color: #fff !important;
+}
+
+/* PROFILE AVATAR ACTIVE */
+.mobile-footer .nav-item.active .MuiAvatar-root {
+  border: 2px solid #fff !important;
+}
+
+/* HEADER ICON ACTIVE */
+.mobile-header .MuiIconButton-root {
+  transition: color 0.2s;
+}
+.mobile-header .MuiIconButton-root[style*="color: rgb(255, 255, 255)"] {
+  color: #fff !important;
 }
 
 /* ===== ẨN SIDEBAR, HIỆN HEADER + FOOTER TRÊN MOBILE ===== */
