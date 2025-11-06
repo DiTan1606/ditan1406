@@ -1,21 +1,18 @@
-// src/components/MobileHeader.js
+// src/components/MobileHeader.js  (updated dùng useNav)
 import React, { useContext } from 'react';
-import { Box, IconButton, Tooltip } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import ChatIcon from '@mui/icons-material/Chat';
 import { AuthContext } from '../contexts/AuthContext';
-import { useLocation } from 'react-router-dom';
+import { useNav } from '../hooks/useNav';
 
 const MobileHeader = ({ onNavClick }) => {
   const { currentUser } = useContext(AuthContext);
-  const location = useLocation();
+  const { isActive } = useNav();
   const username = currentUser?.displayName || 'User';
-
-  const isActive = (path) => location.pathname === path;
 
   return (
     <Box className="mobile-header">
-      {/* LOGO */}
       <Box
         className="logo"
         onClick={() => onNavClick('home')}
@@ -24,25 +21,19 @@ const MobileHeader = ({ onNavClick }) => {
         {username}
       </Box>
 
-      {/* ICONS */}
       <Box sx={{ display: 'flex', gap: 1 }}>
-        <Tooltip>
-          <IconButton
-            onClick={() => onNavClick('notifications')}
-            sx={{ color: isActive('/mobile/notifications') ? '#fff' : '#aaa' }}
-          >
-            <NotificationsIcon />
-          </IconButton>
-        </Tooltip>
-
-        <Tooltip>
-          <IconButton
-            onClick={() => onNavClick('chat')}
-            sx={{ color: isActive('/chat') ? '#fff' : '#aaa' }}
-          >
-            <ChatIcon />
-          </IconButton>
-        </Tooltip>
+        <IconButton
+          onClick={() => onNavClick('notifications')}
+          sx={{ color: isActive('notifications') ? '#fff' : '#aaa' }}
+        >
+          <NotificationsIcon />
+        </IconButton>
+        <IconButton
+          onClick={() => onNavClick('chat')}
+          sx={{ color: isActive('chat') ? '#fff' : '#aaa' }}
+        >
+          <ChatIcon />
+        </IconButton>
       </Box>
     </Box>
   );

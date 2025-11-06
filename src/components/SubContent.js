@@ -1,37 +1,40 @@
-// src/components/SubContent.js
+// src/components/SubContent.js (bỏ debug log)
 import React from 'react';
+import { Suspense } from 'react';
 import { Box, Typography } from '@mui/material';
+import SearchPage from '../pages/SearchPage';
+import NotificationsPage from '../pages/NotificationsPage';
+import ProfilePage from '../pages/ProfilePage';
+import CreatePostPage from '../pages/CreatePostPage';
+import SettingsPage from '../pages/SettingsPage';
+import Chat from '../pages/Chat';
 
 const SubContent = ({ activePanel }) => {
   const renderPanel = () => {
     switch (activePanel) {
       case 'suggestions':
-        return <Suggestions />;
+        return <Suspense fallback={<div>Loading...</div>}><Suggestions /></Suspense>;
       case 'search':
-        return <SearchPanel />;
+        return <Suspense fallback={<div>Loading...</div>}><SearchPage /></Suspense>;
       case 'chat-list':
-        return <ChatList />;
+        return <Suspense fallback={<div>Loading...</div>}><ChatList /></Suspense>;
       case 'notifications':
-        return <NotificationsPanel />;
+        return <Suspense fallback={<div>Loading...</div>}><NotificationsPage /></Suspense>;
       case 'profile':
-        return <ProfileInfo />;
-      case 'settings':
-        return <SettingsPanel />;
+        return <Suspense fallback={<div>Loading...</div>}><ProfilePage /></Suspense>;
       case 'create':
-        return <CreatePostPanel />;
+        return <Suspense fallback={<div>Loading...</div>}><CreatePostPage /></Suspense>;
+      case 'settings':
+        return <Suspense fallback={<div>Loading...</div>}><SettingsPage /></Suspense>;
       default:
-        return <Suggestions />;
+        return <Suspense fallback={<div>Loading...</div>}><Suggestions /></Suspense>;
     }
   };
 
-  return (
-    <Box className="sub-content">
-      {renderPanel()}
-    </Box>
-  );
+  return <Box className="sub-content">{renderPanel()}</Box>;
 };
 
-// CÁC PANEL
+// Placeholder giữ nguyên
 const Suggestions = () => (
   <Box>
     <Typography fontWeight="bold" mb={2} color="#fff">Gợi ý kết bạn</Typography>
@@ -41,58 +44,11 @@ const Suggestions = () => (
   </Box>
 );
 
-const SearchPanel = () => (
-  <Box>
-    <Typography fontWeight="bold" mb={2} color="#fff">Tìm kiếm</Typography>
-    <Box sx={{ p: 2, backgroundColor: '#1a1a1a', borderRadius: 2, textAlign: 'center' }}>
-      <Typography fontSize="0.9rem" color="#aaa">Nhập username để tìm</Typography>
-    </Box>
-  </Box>
-);
-
 const ChatList = () => (
   <Box>
-    <Typography fontWeight="bold" mb={2} color="#fff">Tin nhắn</Typography>
+    <Typography fontWeight="bold" mb={2} color="#fff">Danh sách tin nhắn</Typography>
     <Box sx={{ p: 2, backgroundColor: '#1a1a1a', borderRadius: 2, textAlign: 'center' }}>
       <Typography fontSize="0.9rem" color="#aaa">Chưa có tin nhắn</Typography>
-    </Box>
-  </Box>
-);
-
-const NotificationsPanel = () => (
-  <Box>
-    <Typography fontWeight="bold" mb={2} color="#fff">Thông báo</Typography>
-    <Box sx={{ p: 2, backgroundColor: '#1a1a1a', borderRadius: 2, textAlign: 'center' }}>
-      <Typography fontSize="0.9rem" color="#aaa">Chưa có thông báo</Typography>
-    </Box>
-  </Box>
-);
-
-const ProfileInfo = () => (
-  <Box>
-    <Typography fontWeight="bold" mb={2} color="#fff">Thông tin cá nhân</Typography>
-    <Box sx={{ p: 2, backgroundColor: '#1a1a1a', borderRadius: 2, textAlign: 'center' }}>
-      <Typography fontSize="0.9rem" color="#aaa">Chưa có thông tin</Typography>
-    </Box>
-  </Box>
-);
-
-const SettingsPanel = () => (
-  <Box>
-    <Typography fontWeight="bold" mb={2} color="#fff">Cài đặt</Typography>
-    <Box sx={{ p: 2, backgroundColor: '#1a1a1a', borderRadius: 2, textAlign: 'center' }}>
-      <Typography fontSize="0.9rem" color="#aaa">Cài đặt tài khoản</Typography>
-    </Box>
-  </Box>
-);
-
-const CreatePostPanel = () => (
-  <Box>
-    <Typography fontWeight="bold" mb={2} color="#fff">Tạo bài viết mới</Typography>
-    <Box sx={{ p: 3, backgroundColor: '#1a1a1a', borderRadius: 2, textAlign: 'center' }}>
-      <Typography fontSize="0.9rem" color="#aaa">
-        Form đăng bài sẽ được thêm ở đây
-      </Typography>
     </Box>
   </Box>
 );

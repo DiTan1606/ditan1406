@@ -1,4 +1,4 @@
-// src/contexts/AuthContext.js
+// src/contexts/AuthContext.js  (updated: thêm value cho loading để dùng global nếu cần)
 import React, { createContext, useState, useEffect } from 'react';
 import { auth } from '../services/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -17,13 +17,9 @@ export const AuthProvider = ({ children }) => {
     return unsubscribe;
   }, []);
 
-  if (loading) {
-    return <div style={{ color: '#fff', textAlign: 'center', marginTop: '50px' }}>Loading...</div>;
-  }
-
   return (
-    <AuthContext.Provider value={{ currentUser }}>
-      {children}
+    <AuthContext.Provider value={{ currentUser, loading }}>
+      {!loading ? children : <div style={{ color: '#fff', textAlign: 'center', marginTop: '50px' }}>Loading...</div>}
     </AuthContext.Provider>
   );
 };

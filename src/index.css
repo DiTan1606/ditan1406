@@ -1,7 +1,4 @@
-/* src/index.css */
-/* THÊM PHẦN NÀY VÀO CUỐI FILE index.css (nếu file đã có nội dung cũ, giữ nguyên và paste phần này xuống dưới cùng) */
-/* NẾU FILE CHƯA CÓ, COPY TOÀN BỘ PHẦN DƯỚI LÀM NỘI DUNG MỚI */
-
+/* src/index.css (clean up, thống nhất breakpoint 768px, bỏ hardcode margin) */
 *,
 *::before,
 *::after {
@@ -19,8 +16,8 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #121212 !important; /* Đen tối giản */
-  color: #ffffff !important;            /* Chữ trắng */
+  background-color: #121212;
+  color: #ffffff;
   min-height: 100vh;
 }
 
@@ -30,21 +27,21 @@ body {
 .MuiAppBar-root,
 .MuiPaper-root,
 .MuiCard-root {
-  background-color: #1e1e1e !important;
-  color: #fff !important;
+  background-color: #1e1e1e;
+  color: #fff;
 }
 
 .MuiTextField-root .MuiOutlinedInput-root {
   color: #fff;
 }
 .MuiTextField-root .MuiOutlinedInput-notchedOutline {
-  border-color: #444 !important;
+  border-color: #444;
 }
 .MuiTextField-root:hover .MuiOutlinedInput-notchedOutline {
-  border-color: #666 !important;
+  border-color: #666;
 }
 .MuiTextField-root .MuiInputLabel-root {
-  color: #aaa !important;
+  color: #aaa;
 }
 
 /* FONT INSTAGRAM */
@@ -52,12 +49,25 @@ body {
   font-family: 'Grand Hotel', cursive;
 }
 
-/* ===== HEADER DỌC BÊN PHẢI - LUÔN HIỂN THỊ ===== */
-.right-sidebar {
+/* APP LAYOUT (dùng flex để responsive tự động) */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #000;
+}
+
+.main-content {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  background-color: #111;
+}
+
+.desktop-sidebar {
   position: fixed;
   top: 0;
   right: 0;
-  width: 200px;                 /* LUÔN MỞ RỘNG */
+  width: 200px;
   height: 100vh;
   background-color: #000;
   border-left: 1px solid #333;
@@ -67,20 +77,19 @@ body {
   align-items: center;
   padding: 16px 0;
   z-index: 1200;
-  transition: none;             /* TẮT HIỆU ỨNG HOVER */
 }
 
-.right-sidebar .nav-upper,
-.right-sidebar .nav-lower {
+.desktop-sidebar .nav-upper,
+.desktop-sidebar .nav-lower {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  align-items: flex-start;      /* Căn trái để chữ hiện đẹp */
+  align-items: flex-start;
   width: 100%;
   padding: 0 16px;
 }
 
-.right-sidebar .nav-item {
+.desktop-sidebar .nav-item {
   display: flex;
   align-items: center;
   width: 100%;
@@ -92,26 +101,24 @@ body {
   cursor: pointer;
 }
 
-.right-sidebar .nav-item:hover {
+.desktop-sidebar .nav-item:hover {
   background-color: #333;
 }
 
-.right-sidebar .nav-item.active {
+.desktop-sidebar .nav-item.active {
   background-color: #262626;
   font-weight: 600;
 }
 
-.right-sidebar .nav-label {
+.desktop-sidebar .nav-label {
   width: 100%;
   text-align: center;
-  margin: 0 auto;
   font-size: 1rem;
-  opacity: 1 !important;       /* LUÔN HIỂN THỊ */
   white-space: nowrap;
 }
 
 /* Logo */
-.right-sidebar .logo {
+.desktop-sidebar .logo {
   font-family: 'Grand Hotel', cursive;
   font-size: 2rem;
   font-style: italic;
@@ -129,22 +136,6 @@ body {
   padding-right: 12px;
 }
 
-/* Đẩy nội dung chính sang trái để không bị che */
-.app-layout {
-  display: flex;
-  min-height: 100vh;
-  background-color: #000;
-}
-
-.main-content {
-  flex: 1;
-  width: 100%;
-  margin-right: 560px; /* Đẩy sang trái để chừa chỗ header */
-  padding: 16px;
-  overflow-y: auto;
-  background-color: #111;
-}
-
 .sub-content {
   width: 360px;
   background-color: #000;
@@ -158,20 +149,7 @@ body {
   z-index: 1100;
 }
 
-/* Ẩn sidebar trên mobile */
-@media (max-width: 768px) {
-  .right-sidebar {
-    display: none;
-  }
-  .main-content {
-    margin-right: 0 !important;
-  }
-  .sub-content {
-    display: none !important;
-  }
-}
-
-/* ===== AUTH PAGES: LOGIN & SIGNUP (GIỐNG INSTAGRAM) ===== */
+/* AUTH PAGES (giữ nguyên) */
 .auth-container {
   min-height: 100vh;
   background-color: #000;
@@ -246,53 +224,32 @@ body {
 }
 
 .auth-button {
-  background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D) !important;
-  color: #fff !important;
-  font-weight: 600 !important;
-  border-radius: 8px !important;
-  margin-top: 16px !important;
+  background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
+  color: #fff;
+  font-weight: 600;
+  border-radius: 8px;
+  margin-top: 16px;
 }
 
 .auth-input .MuiFilledInput-root {
-  background-color: #333 !important;
-  border-radius: 8px !important;
+  background-color: #333;
+  border-radius: 8px;
 }
 
 .auth-input .MuiFilledInput-root::before,
 .auth-input .MuiFilledInput-root::after {
-  border-bottom: none !important;
+  border-bottom: none;
 }
 
 .auth-input .MuiInputLabel-root {
-  color: #aaa !important;
+  color: #aaa;
 }
 
 .auth-input .MuiFilledInput-input {
-  color: #fff !important;
+  color: #fff;
 }
 
-/* RESPONSIVE */
-@media (min-width: 768px) {
-  .auth-mockup {
-    display: block;
-  }
-  .auth-wrapper {
-    flex-direction: row;
-  }
-}
-
-@media (max-width: 767px) {
-  .auth-wrapper {
-    flex-direction: column;
-    gap: 32px;
-  }
-  .auth-form-container {
-    width: 100%;
-    max-width: 380px;
-  }
-}
-
-/* ===== MOBILE: HEADER (TRÊN CÙNG) ===== */
+/* MOBILE HEADER */
 .mobile-header {
   position: fixed;
   top: 0;
@@ -304,7 +261,7 @@ body {
   display: none;
   align-items: center;
   justify-content: space-between;
-  padding: 20px;
+  padding: 0 16px;
   z-index: 1300;
 }
 
@@ -327,7 +284,7 @@ body {
   cursor: pointer;
 }
 
-/* ===== MOBILE: FOOTER (DƯỚI CÙNG) ===== */
+/* MOBILE FOOTER */
 .mobile-footer {
   position: fixed;
   bottom: 0;
@@ -340,7 +297,7 @@ body {
   justify-content: space-around;
   align-items: center;
   z-index: 1300;
-  padding: 16px;
+  padding: 0 16px;
 }
 
 .mobile-footer .nav-item {
@@ -361,40 +318,32 @@ body {
   font-size: 1.5rem;
 }
 
-/* ===== MOBILE ICON ACTIVE ===== */
-.mobile-footer .nav-item svg {
-  transition: color 0.2s;
-}
-.mobile-footer .nav-item.active svg {
-  color: #fff !important;
-}
-
-/* PROFILE AVATAR ACTIVE */
-.mobile-footer .nav-item.active .MuiAvatar-root {
-  border: 2px solid #fff !important;
-}
-
-/* HEADER ICON ACTIVE */
-.mobile-header .MuiIconButton-root {
-  transition: color 0.2s;
-}
-.mobile-header .MuiIconButton-root[style*="color: rgb(255, 255, 255)"] {
-  color: #fff !important;
-}
-
-/* ===== ẨN SIDEBAR, HIỆN HEADER + FOOTER TRÊN MOBILE ===== */
-@media (max-width: 767px) {
-  .right-sidebar {
-    display: none !important;
+/* RESPONSIVE (thống nhất breakpoint 768px) */
+@media (max-width: 768px) {
+  .desktop-sidebar, .sub-content {
+    display: none;
   }
   .main-content {
-    margin-right: 0 !important;
-    padding-top: 70px !important;   /* Đẩy xuống dưới header */
-    padding-bottom: 70px !important; /* Đẩy lên trên footer */
-    min-height: calc(100vh - 140px);
+    padding-top: 60px;
+    padding-bottom: 60px;
   }
-  .mobile-header,
-  .mobile-footer {
+  .mobile-header, .mobile-footer {
     display: flex;
+  }
+  .auth-mockup {
+    display: none;
+  }
+  .auth-wrapper {
+    flex-direction: column;
+    gap: 32px;
+  }
+}
+
+@media (min-width: 769px) {
+  .auth-mockup {
+    display: block;
+  }
+  .mobile-header, .mobile-footer {
+    display: none;
   }
 }
