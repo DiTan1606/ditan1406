@@ -41,7 +41,7 @@ const Login = () => {
             <form onSubmit={handleLogin}>
               <TextField
                 fullWidth
-                label="Email hoặc tên người dùng"
+                label="Email"
                 variant="filled"
                 className="auth-input"
                 margin="normal"
@@ -58,11 +58,11 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              {error && <Typography color="error" variant="body2" sx={{ mt: 1 }}>{error}</Typography>}
+              {error && <Typography color="error" variant="body2">{error}</Typography>}
               <Button fullWidth type="submit" className="auth-button">
                 Đăng nhập
               </Button>
-              <Typography variant="body2" sx={{ mt: 2 }}>
+              <Typography variant="body2">
                 <Link href="#" sx={{ color: '#0095f6' }}>Quên mật khẩu?</Link>
               </Typography>
             </form>

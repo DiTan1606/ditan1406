@@ -4,12 +4,13 @@ import { AuthContext } from '../contexts/AuthContext';
 import { auth } from '../services/firebase';
 import { signOut } from 'firebase/auth';
 import { Box, Avatar, Tooltip, Typography } from '@mui/material';
-import HomeIcon from '@mui/icons-material/Home';
-import SearchIcon from '@mui/icons-material/Search';
-import ChatIcon from '@mui/icons-material/Chat';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import SettingsIcon from '@mui/icons-material/Settings';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import HomeIcon from '@mui/icons-material/HomeRounded';
+import SearchIcon from '@mui/icons-material/SearchRounded';
+import ChatIcon from '@mui/icons-material/SendRounded';
+import NotificationsIcon from '@mui/icons-material/FavoriteBorderRounded';
+import SettingsIcon from '@mui/icons-material/SettingsRounded';
+import AddIcon from '@mui/icons-material/AddRounded';
+import LogoutIcon from '@mui/icons-material/LogoutRounded';
 import { useNav } from '../hooks/useNav';
 
 const iconMap = {
@@ -17,8 +18,9 @@ const iconMap = {
   SearchIcon: <SearchIcon />,
   ChatIcon: <ChatIcon />,
   NotificationsIcon: <NotificationsIcon />,
-  AddCircleOutlineIcon: <AddCircleOutlineIcon />,
+  AddIcon: <AddIcon />,
   SettingsIcon: <SettingsIcon />,
+  Logout: <LogoutIcon />
 };
 
 const DesktopSidebar = ({ onNavClick, activePanel }) => {
@@ -32,6 +34,11 @@ const DesktopSidebar = ({ onNavClick, activePanel }) => {
 
   const username = currentUser?.displayName || 'User';
 
+  // Lọc navItems để loại bỏ 'settings' ra khỏi nav-upper
+  const upperNavItems = navItems.filter(item => item.panel !== 'settings');
+  // Lấy item settings riêng
+  const settingsItem = navItems.find(item => item.panel === 'settings');
+
   return (
     <Box className="desktop-sidebar">
       <Box className="nav-upper">
@@ -43,7 +50,7 @@ const DesktopSidebar = ({ onNavClick, activePanel }) => {
           {username}
         </Typography>
 
-        {navItems.map((item) => (
+        {upperNavItems.map((item) => (
           <Tooltip key={item.panel} title={item.label} placement="left">
             <Box
               className={`nav-item ${isActive(item.panel) ? 'active' : ''}`}
@@ -62,9 +69,23 @@ const DesktopSidebar = ({ onNavClick, activePanel }) => {
       </Box>
 
       <Box className="nav-lower">
+        {/* Thêm nút Settings vào nav-lower */}
+        {settingsItem && (
+          <Tooltip key={settingsItem.panel} title={settingsItem.label} placement="left">
+            <Box
+              className={`nav-item ${isActive(settingsItem.panel) ? 'active' : ''}`}
+              onClick={() => onNavClick(settingsItem.panel)}
+              sx={{ cursor: 'pointer', mb: 1 }}
+            >
+              {iconMap[settingsItem.icon]}
+              <span className="nav-label">{settingsItem.label}</span>
+            </Box>
+          </Tooltip>
+        )}
+
         <Tooltip title="Đăng xuất" placement="left">
           <Box className="nav-item" onClick={handleLogout} sx={{ color: '#ed4956' }}>
-            <SettingsIcon sx={{ transform: 'rotate(90deg)' }} />
+            <LogoutIcon/>
             <span className="nav-label">Logout</span>
           </Box>
         </Tooltip>

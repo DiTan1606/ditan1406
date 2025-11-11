@@ -93,7 +93,7 @@ body {
   display: flex;
   align-items: center;
   width: 100%;
-  padding: 8px 12px;
+  padding: 10px 12px;
   color: #fff;
   text-decoration: none;
   border-radius: 12px;
@@ -112,9 +112,11 @@ body {
 
 .desktop-sidebar .nav-label {
   width: 100%;
-  text-align: center;
   font-size: 1rem;
   white-space: nowrap;
+  margin-left: 12px;
+  position: relative;
+  top: -0.5px
 }
 
 /* Logo */
@@ -131,9 +133,9 @@ body {
   cursor: pointer;
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
-  padding-right: 12px;
+  padding-left: 12px;
 }
 
 .sub-content {
@@ -163,8 +165,8 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 64px;
-  max-width: 1200px;
+  gap: 60px;
+  max-width: 1000px;
   width: 100%;
 }
 
@@ -175,9 +177,7 @@ body {
 
 .auth-mockup img {
   width: 100%;
-  max-width: 380px;
-  border-radius: 20px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  max-width: 560px;
 }
 
 .auth-form-container {
@@ -194,7 +194,7 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .auth-box {
@@ -203,6 +203,18 @@ body {
   border-radius: 12px;
   border: 1px solid #333;
   margin-bottom: 16px;
+}
+
+.auth-box form {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.auth-box form Button {
+  margin: 16px 0;
 }
 
 .auth-switch {
@@ -316,6 +328,55 @@ body {
 
 .mobile-footer .nav-item svg {
   font-size: 1.5rem;
+}
+
+/* ===== MOBILE ICON ACTIVE ===== */
+.mobile-footer .nav-item svg,
+.mobile-header .MuiIconButton-root svg {
+  transition: color 0.2s ease-in-out;  /* Thêm transition cho mượt */
+}
+.mobile-footer .nav-item.active svg,
+.mobile-header .MuiIconButton-root.active svg {
+  color: #fff !important;  /* Active trắng */
+}
+
+/* Hover effect cho icons */
+.mobile-footer .nav-item:hover svg,
+.mobile-header .MuiIconButton-root:hover svg {
+  color: #ddd;  /* Mờ sáng hơn khi hover */
+}
+
+/* PROFILE AVATAR ACTIVE (đã có border, thêm nếu cần color) */
+.mobile-footer .nav-item.active .MuiAvatar-root {
+  border: 2px solid #0095f6 !important;  /* Giữ nguyên */
+}
+
+/* Override cho IconButton trong header (nếu cần active class) */
+.mobile-header .MuiIconButton-root {
+  transition: color 0.2s ease-in-out;
+}
+.mobile-header .MuiIconButton-root[style*="color: rgb(255, 255, 255)"] {
+  color: #fff !important;
+}
+
+/* Mobile Header Icons Active */
+.mobile-header .MuiIconButton-root {
+  transition: color 0.2s ease-in-out;
+}
+.mobile-header .MuiIconButton-root svg {
+  transition: color 0.2s ease-in-out;
+}
+.mobile-header .MuiIconButton-root.active {
+  color: #fff !important;  /* Force active trắng */
+}
+.mobile-header .MuiIconButton-root.active svg {
+  color: #fff !important;
+}
+
+/* Hover cho mượt hơn */
+.mobile-header .MuiIconButton-root:hover,
+.mobile-header .MuiIconButton-root:hover svg {
+  color: #ddd;
 }
 
 /* RESPONSIVE (thống nhất breakpoint 768px) */

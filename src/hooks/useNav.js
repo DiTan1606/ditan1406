@@ -1,4 +1,4 @@
-// src/hooks/useNav.js (updated: dùng NavContext cho state, bỏ debug log)
+// src/hooks/useNav.js 
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useMediaQuery } from '@mui/material';
 import { navItems } from '../config/navConfig';
@@ -33,10 +33,12 @@ export const useNav = () => {
     const item = navItems.find(i => i.panel === panel);
     if (!item) return false;
 
+    // Cho desktop: Check activePanel khi ở /home hoặc /chat
     if (location.pathname === '/chat' && panel === 'chat') return true;
-
-    // Active dựa trên activePanel khớp subPanel
     if (location.pathname === '/home' && activePanel === item.subPanel) return true;
+
+    // Cho mobile: Active nếu pathname khớp path của item (cho tất cả nút)
+    if (isMobile && location.pathname === item.path) return true;
 
     return false;
   };

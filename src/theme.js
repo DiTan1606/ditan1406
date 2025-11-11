@@ -5,7 +5,7 @@ const darkTheme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: '#fff',  // Màu Instagram blue cho buttons
+      main: '#fff',  
     },
     background: {
       default: '#000',  // Black background

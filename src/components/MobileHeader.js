@@ -1,8 +1,8 @@
-// src/components/MobileHeader.js  (updated dùng useNav)
+// src/components/MobileHeader.js
 import React, { useContext } from 'react';
 import { Box, IconButton } from '@mui/material';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import ChatIcon from '@mui/icons-material/Chat';
+import NotificationsIcon from '@mui/icons-material/FavoriteBorderRounded';  // Đổi icon theo code mới của bạn
+import ChatIcon from '@mui/icons-material/SendRounded';
 import { AuthContext } from '../contexts/AuthContext';
 import { useNav } from '../hooks/useNav';
 
@@ -23,16 +23,18 @@ const MobileHeader = ({ onNavClick }) => {
 
       <Box sx={{ display: 'flex', gap: 1 }}>
         <IconButton
+          className={isActive('notifications') ? 'active' : ''}  // Thêm class cho CSS
           onClick={() => onNavClick('notifications')}
-          sx={{ color: isActive('notifications') ? '#fff' : '#aaa' }}
+          sx={{ color: isActive('notifications') ? '#fff !important' : '#aaa !important' }}  // Thêm !important để force color
         >
-          <NotificationsIcon />
+          <NotificationsIcon sx={{ color: 'inherit' }} /> 
         </IconButton>
         <IconButton
+          className={isActive('chat') ? 'active' : ''}  // Thêm class cho CSS
           onClick={() => onNavClick('chat')}
-          sx={{ color: isActive('chat') ? '#fff' : '#aaa' }}
+          sx={{ color: isActive('chat') ? '#fff !important' : '#aaa !important' }}  // Thêm !important để force color
         >
-          <ChatIcon />
+          <ChatIcon sx={{ color: 'inherit' }} /> 
         </IconButton>
       </Box>
     </Box>
